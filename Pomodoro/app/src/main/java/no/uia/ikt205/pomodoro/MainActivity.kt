@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.widget.Button
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import no.uia.ikt205.pomodoro.util.millisecondsToDescriptiveTime
@@ -13,11 +14,11 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var timer:CountDownTimer
     lateinit var startButton:Button
-    lateinit var coutdownDisplay:TextView
-    lateinit var timeButton30: Button
-    lateinit var timeButton60: Button
-    lateinit var timeButton90: Button
-    lateinit var timeButton120: Button
+    lateinit var countdownDisplay:TextView
+    lateinit var timeWorkSeekBar: SeekBar
+    lateinit var timePauseSeekBar: SeekBar
+    lateinit var timeWorkTextView: TextView
+    lateinit var timePauseTextView: TextView
 
     var timeToCountDownInMs = 5000L
     val timeTicks = 1000L
@@ -27,21 +28,47 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         startButton = findViewById<Button>(R.id.startCountdownButton)
-        startButton.setOnClickListener(){
+        startButton.setOnClickListener {
             startCountDown(it)
         }
-        coutdownDisplay = findViewById<TextView>(R.id.countDownView)
-        timeButton30 = findViewById<Button>(R.id.timeSelect30)
-        timeButton30.setOnClickListener(){setCountTime(30)}
-        timeButton60 = findViewById<Button>(R.id.timeSelect60)
-        timeButton60.setOnClickListener(){setCountTime(60)}
-        timeButton90 = findViewById<Button>(R.id.timeSelect90)
-        timeButton90.setOnClickListener(){setCountTime(90)}
-        timeButton120 = findViewById<Button>(R.id.timeSelect120)
-        timeButton120.setOnClickListener(){setCountTime(120)}
+        countdownDisplay = findViewById<TextView>(R.id.countDownView)
+        timeWorkTextView = findViewById<TextView>(R.id.timeWorkTextView)
+        timePauseTextView = findViewById<TextView>(R.id.timePauseTextView)
+        timeWorkSeekBar = findViewById<SeekBar>(R.id.timeWorkSeekBar)
+        timeWorkSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                Toast.makeText(this@MainActivity,"abc", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                TODO("Not yet implemented")
+            }
+        })
+        timePauseSeekBar = findViewById<SeekBar>(R.id.timePauseSeekBar)
+        /*timePauseSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                Toast.makeText(this@MainActivity,"abc", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                TODO("Not yet implemented")
+            }
+        })*/
+
     }
 
-    fun setCountTime(t_min: Int){
+    fun setWorkTime(t_min: Int){
+        timeToCountDownInMs = (t_min * 1000 * 60).toLong()
+    }
+    fun setPauseTime(t_min: Int){
         timeToCountDownInMs = (t_min * 1000 * 60).toLong()
     }
 
@@ -62,7 +89,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateCountDownDisplay(timeInMs:Long){
-        coutdownDisplay.text = millisecondsToDescriptiveTime(timeInMs)
+        countdownDisplay.text = millisecondsToDescriptiveTime(timeInMs)
     }
 
 }
+
