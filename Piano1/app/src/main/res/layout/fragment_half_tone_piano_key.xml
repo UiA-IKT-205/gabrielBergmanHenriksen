@@ -3,15 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_200"
-    tools:context=".FullTonePianoKey">
+    tools:context=".HalfTonePianoKey">
 
-
-    <Button
-        android:id="@+id/fullToneKeyBt"
-        android:layout_width="55dp"
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/pianokeyshape"
-        style="@style/FullNoteBt"/>
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

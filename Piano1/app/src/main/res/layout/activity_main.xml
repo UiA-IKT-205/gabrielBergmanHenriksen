@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="horizontal" >
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentPiano"
+        android:id="@+id/fragmentPianoKeys"
         android:name="com.example.piano1.Piano"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
