@@ -12,7 +12,7 @@ import com.example.huskeliste1.data.TodoList
 import com.example.huskeliste1.data.Items
 import com.example.huskeliste1.databinding.ActivityListDetailsBinding
 
-var receivedListFormatted = ""
+var ListOnFirebase = ""
 val TAG = "ListDetailsActivity"
 
 class ListDetailsActivity : AppCompatActivity() {
@@ -40,11 +40,11 @@ class ListDetailsActivity : AppCompatActivity() {
             list = ListHolder.PickedList!!
             Log.i("Details view", list.toString())
 
-            receivedListFormatted = list.toString().replace("TodoList(dbList=", "")
+            ListOnFirebase = list.toString().replace("TodoList(dbList=", "")
 
             db.collection("ListGroups")
-                .document(receivedListFormatted.replace(")", ""))
-                .collection(receivedListFormatted.replace(")", ""))
+                .document(ListOnFirebase.replace(")", ""))
+                .collection(ListOnFirebase.replace(")", ""))
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -66,7 +66,7 @@ class ListDetailsActivity : AppCompatActivity() {
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
 
-            binding.listName.text = receivedListFormatted.replace(")", "")
+            binding.listName.text = ListOnFirebase.replace(")", "")
 
         } else{
             setResult(RESULT_CANCELED, Intent().apply {})
@@ -74,11 +74,10 @@ class ListDetailsActivity : AppCompatActivity() {
         }
 
         db.collection("Progress")
-            .document(receivedListFormatted.replace(")", ""))
+            .document(ListOnFirebase.replace(")", ""))
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
                     Log.w(TAG, "Listen failed.", e)
-                    return@addSnapshotListener
                 }
 
                 if (snapshot != null && snapshot.exists()) {
@@ -96,14 +95,14 @@ class ListDetailsActivity : AppCompatActivity() {
 
             if(todoTitle.isNotEmpty()) {
                 var todo = Items(todoTitle, false)
-                val receivedListFormatted = list.toString().replace("TodoList(dbList=", "")
+                val ListOnFirebase = list.toString().replace("TodoList(dbList=", "")
                 val todoy = hashMapOf(
                     "done" to false
                 )
 
                 db.collection("ListGroups")
-                    .document(receivedListFormatted.replace(")", ""))
-                    .collection(receivedListFormatted.replace(")", ""))
+                    .document(ListOnFirebase.replace(")", ""))
+                    .collection(ListOnFirebase.replace(")", ""))
                     .document(todoTitle)
                     .set(todoy)
                     .addOnSuccessListener {
@@ -124,7 +123,7 @@ class ListDetailsActivity : AppCompatActivity() {
 
             ItemClass.instance.deleteChecked()
 
-            db.collection("ListGroup")
+            db.collection("ListGroups")
                 .document(receivedBookFormatted.replace(")", ""))
                 .collection(receivedBookFormatted.replace(")", ""))
                 .whereEqualTo("done", true)
@@ -137,7 +136,7 @@ class ListDetailsActivity : AppCompatActivity() {
                             .document(document.id)
                             .delete()
                             .addOnSuccessListener {
-                                Log.d(TAG, "DocumentSnapshot successfully deleted!")
+                                Log.d(TAG, "Successfully deleted!")
 
                                 // Returns progress bar to 0
                                 val doc = hashMapOf(
@@ -145,7 +144,7 @@ class ListDetailsActivity : AppCompatActivity() {
                                 )
 
                                 db.collection("Progress")
-                                    .document(receivedListFormatted.replace(")", ""))
+                                    .document(ListOnFirebase.replace(")", ""))
                                     .set(doc)
                                     .addOnSuccessListener {
                                         Log.d(TAG, "Changed progress")

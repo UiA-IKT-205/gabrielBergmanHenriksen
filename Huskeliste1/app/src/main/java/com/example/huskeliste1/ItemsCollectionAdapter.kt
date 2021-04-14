@@ -26,7 +26,7 @@ class ItemsCollectionAdapter(private var items:List<Items>) : RecyclerView.Adapt
         val db = Firebase.firestore
         var countTrue = 0
         var totalItems: Int
-        var progressValue: Float = 0.00F
+        var progressValue = 0.0F
         holder.bind(item)
 
         holder.itemView.apply {
@@ -36,11 +36,9 @@ class ItemsCollectionAdapter(private var items:List<Items>) : RecyclerView.Adapt
             cbDone.setOnCheckedChangeListener { _, isChecked ->
                 item.isChecked = !item.isChecked
 
-                // Changes status in Firestore
-                // ------------------------------------------------------------------------ //
-                db.collection("Lists")
-                    .document(receivedListFormatted.replace(")", ""))
-                    .collection(receivedListFormatted.replace(")", ""))
+                db.collection("ListGroups")
+                    .document(ListOnFirebase.replace(")", ""))
+                    .collection(ListOnFirebase.replace(")", ""))
                     .document(tvTodoTitle.text as String)
                     .update("done", cbDone.isChecked)
                     .addOnSuccessListener {
@@ -49,13 +47,10 @@ class ItemsCollectionAdapter(private var items:List<Items>) : RecyclerView.Adapt
                     .addOnFailureListener { e ->
                         println("Failed to change status!")
                     }
-                // ------------------------------------------------------------------------ //
 
-                // Calculates and updates progress
-                // ------------------------------------------------------------------------ //
-                db.collection("Lists")
-                    .document(receivedListFormatted.replace(")", ""))
-                    .collection(receivedListFormatted.replace(")", ""))
+                db.collection("ListGroups")
+                    .document(ListOnFirebase.replace(")", ""))
+                    .collection(ListOnFirebase.replace(")", ""))
                     .whereEqualTo("done", true)
                     .get()
                     .addOnSuccessListener { documents ->
@@ -74,24 +69,22 @@ class ItemsCollectionAdapter(private var items:List<Items>) : RecyclerView.Adapt
                         )
 
                         db.collection("Progress")
-                            .document(receivedListFormatted.replace(")", ""))
+                            .document(ListOnFirebase.replace(")", ""))
                             .set(doc)
                             .addOnSuccessListener {
-                                println("Changed progress")
+                                println("Progress changed")
                             }
                             .addOnFailureListener {
-                                println("Failed to change progress!")
+                                println("Failed changing progress")
                             }
 
-                        // Set values back to 0
                         countTrue = 0
                         totalItems = 0
                         progressValue = 0.0F
                     }
                     .addOnFailureListener { e ->
-                        println("Failed to get progress!")
+                        println("Failed getting progress")
                     }
-                // ------------------------------------------------------------------------ //
             }
         }
     }

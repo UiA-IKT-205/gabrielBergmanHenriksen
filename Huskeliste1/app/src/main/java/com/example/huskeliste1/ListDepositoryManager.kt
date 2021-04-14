@@ -20,7 +20,7 @@ class ListDepositoryManager {
         val TAG = "ToDoListLists"
         val db = Firebase.firestore
 
-        db.collection("ListGroup")
+        db.collection("ListGroups")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -32,7 +32,6 @@ class ListDepositoryManager {
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
             }
-        // ------------------------------------------------------------------------ //
 
         onLists?.invoke(multiList)
     }
