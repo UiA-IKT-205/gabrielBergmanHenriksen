@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "154419452459",
+    "firebase_url": "https://huskeliste-0-default-rtdb.firebaseio.com",
+    "project_id": "huskeliste-0",
+    "storage_bucket": "huskeliste-0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154419452459:android:9e237b124c0565a58f686e",
+        "android_client_info": {
+          "package_name": "com.example.huskeliste1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154419452459-g12trf6tn1n3bdepefchpredkonsfvv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3JSx_k7djGh1DBV7Gif_-KHWaDdY6Zsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154419452459-g12trf6tn1n3bdepefchpredkonsfvv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154419452459:android:491be3521b5cb0688f686e",
+        "android_client_info": {
+          "package_name": "com.example.huskeliste1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154419452459-g12trf6tn1n3bdepefchpredkonsfvv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3JSx_k7djGh1DBV7Gif_-KHWaDdY6Zsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154419452459-g12trf6tn1n3bdepefchpredkonsfvv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154419452459:android:170ad997b1373d608f686e",
+        "android_client_info": {
+          "package_name": "com.example.huskeliste2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154419452459-g12trf6tn1n3bdepefchpredkonsfvv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3JSx_k7djGh1DBV7Gif_-KHWaDdY6Zsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154419452459-g12trf6tn1n3bdepefchpredkonsfvv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
