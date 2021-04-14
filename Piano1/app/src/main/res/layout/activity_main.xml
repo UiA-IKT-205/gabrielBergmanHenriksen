@@ -9,9 +9,8 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentPianoKeys"
-        android:name="com.example.piano1.Piano"
+        android:name="com.example.piano1.PianoLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
