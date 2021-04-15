@@ -9,11 +9,11 @@
     <TextView
         android:id="@+id/listName"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="108dp"
-        android:text="TextView"
-        android:textSize="30dp"
-        android:gravity="center|bottom"
+        android:layout_height="49dp"
+        android:layout_marginTop="112dp"
+        android:text="@string/listDefaultTitle"
+        android:textSize="29sp"
+        android:gravity="center"
         android:includeFontPadding="true"
         android:background="#777777"
         android:textColor="@color/black"
@@ -25,11 +25,12 @@
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:padding="10dp"
+        android:layout_marginHorizontal="40dp"
         android:progress="0"
         android:max="100"
         android:background="#777777"
-        android:progressTint="#050505"
+        android:progressTint="@color/teal_700"
         app:layout_constraintBottom_toTopOf="@+id/rvListItems" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -45,17 +46,19 @@
         android:id="@+id/etNewItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Item name"
+        android:hint="@string/itemName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnAddItem"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints=""
+        android:inputType="text" />
 
     <Button
         android:id="@+id/btnAddItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/teal_200"
+        android:text="@string/btnAdd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnDeleteItem" />
 
@@ -63,8 +66,8 @@
         android:id="@+id/btnDeleteItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
-        android:backgroundTint="@color/black"
+        android:text="@string/btnDelete"
+        android:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

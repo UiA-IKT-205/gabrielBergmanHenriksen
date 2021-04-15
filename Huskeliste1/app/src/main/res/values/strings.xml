@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">Huskeliste1</string>
     <string name="headerTitleView">Huskeliste</string>
+    <string name="subtitleText">Hjelper deg å huske</string>
+    <string name="itemText">Item Text</string>
+    <string name="deleteBtn">Delete</string>
+    <string name="itemName">Item name</string>
+    <string name="btnAdd">Add</string>
+    <string name="listDefaultTitle">Name of list</string>
+    <string name="btnDelete">Delete</string>
+    <string name="listDefaultName">Name</string>
+    <string name="btnNewListText">Create new list</string>
 </resources>

@@ -8,43 +8,40 @@ import com.google.firebase.firestore.ktx.firestore
 
 class ListDepositoryManager {
 
-    private lateinit var multiList: MutableList<TodoList>
+    private lateinit var mutableList: MutableList<TodoList>
 
     var onLists: ((List<TodoList>) -> Unit)? = null
-    var onListUpdate: ((list: TodoList) -> Unit)? = null
 
     fun load(context: Context) {
 
-        multiList = mutableListOf()
+        mutableList = mutableListOf()
 
         val TAG = "ToDoListLists"
         val db = Firebase.firestore
 
-        db.collection("ListGroup")
+        db.collection("ListGroups")
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     Log.d(TAG, "${document.id} => ${document.data}")
-                    val bookFirebase = TodoList(document.id)
-                    addList(bookFirebase)
+                    addList(TodoList(document.id))
                 }
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
             }
-        // ------------------------------------------------------------------------ //
 
-        onLists?.invoke(multiList)
+        onLists?.invoke(mutableList)
     }
 
     fun addList(list: TodoList) {
-        multiList.add(list)
-        onLists?.invoke(multiList)
+        mutableList.add(list)
+        onLists?.invoke(mutableList)
     }
 
     fun removeList(list: TodoList) {
-        multiList.remove(list)
-        onLists?.invoke(multiList)
+        mutableList.remove(list)
+        onLists?.invoke(mutableList)
     }
 
     companion object {

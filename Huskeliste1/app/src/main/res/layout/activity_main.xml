@@ -10,35 +10,35 @@
         android:id="@+id/headerTitle"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="@string/headerTitleView"
-        android:textSize="38sp"
+        android:background="#777777"
         android:gravity="center"
         android:includeFontPadding="true"
-        android:background="#777777"
+        android:text="@string/headerTitleView"
         android:textColor="#111111"
-        />
+        android:textSize="38sp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/slang"
+        android:id="@+id/subtitleBox"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:text="Hjelper deg å huske"
-        android:textSize="20sp"
+        android:layout_height="73dp"
+        android:text="@string/subtitleText"
+        android:textSize="19sp"
         android:gravity="center|top"
         android:includeFontPadding="true"
         android:background="#555555"
         android:textColor="#999999"
         app:layout_constraintTop_toBottomOf="@id/headerTitle"
-        app:layout_constraintBottom_toTopOf="@id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@id/svListBox"
         />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/svListBox"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/addBookForm"
-        app:layout_constraintTop_toBottomOf="@id/slang">
+        android:layout_marginTop="19dp"
+        app:layout_constraintBottom_toTopOf="@+id/layoutNewList"
+        app:layout_constraintTop_toBottomOf="@id/subtitleBox">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ListGroupView"
@@ -48,28 +48,29 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/addBookForm"
-        android:layout_width="match_parent"
+        android:id="@+id/layoutNewList"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:backgroundTint="@color/purple_500"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/svListBox">
 
         <EditText
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:hint="@string/listDefaultName"
             android:inputType="text"
-            android:hint="Name"/>
+            android:autofillHints="" />
 
         <Button
-            android:id="@+id/saveBt"
-            android:layout_width="match_parent"
+            android:id="@+id/btSave"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/teal_200"
-            android:text="Save" />
+            android:text="@string/btnNewListText" />
 
     </LinearLayout>
 

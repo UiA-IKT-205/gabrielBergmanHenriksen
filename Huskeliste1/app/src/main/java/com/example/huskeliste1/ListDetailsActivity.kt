@@ -12,7 +12,7 @@ import com.example.huskeliste1.data.TodoList
 import com.example.huskeliste1.data.Items
 import com.example.huskeliste1.databinding.ActivityListDetailsBinding
 
-var receivedListFormatted = ""
+var listOnFirebase = ""
 val TAG = "ListDetailsActivity"
 
 class ListDetailsActivity : AppCompatActivity() {
@@ -36,58 +36,47 @@ class ListDetailsActivity : AppCompatActivity() {
 
         ItemClass.instance.loadItems()
 
-        if(ListHolder.PickedList != null){
-            list = ListHolder.PickedList!!
-            Log.i("Details view", list.toString())
-
-            receivedListFormatted = list.toString().replace("TodoList(dbList=", "")
-
-            db.collection("ListGroups")
-                .document(receivedListFormatted.replace(")", ""))
-                .collection(receivedListFormatted.replace(")", ""))
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        Log.d(TAG, "${document.id} => ${document.data}")
-                        val dataForm = document.data.toString().replace("{done=", "")
-                        val formattedDone = dataForm.replace("}", "")
-                        println(formattedDone)
-                        var itemFirebase: Items
-                        if (formattedDone == "true") {
-                            itemFirebase = Items(document.id, isChecked = true)
-                        } else {
-                            itemFirebase = Items(document.id, isChecked = false)
-                        }
-
-                        ItemClass.instance.addItem(itemFirebase)
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w(TAG, "Error getting documents: ", exception)
-                }
-
-            binding.listName.text = receivedListFormatted.replace(")", "")
-
-        } else{
+        if (ListHolder.PickedList == null) {
             setResult(RESULT_CANCELED, Intent().apply {})
             finish()
         }
+        list = ListHolder.PickedList!!
+
+        listOnFirebase = list.toString().replace("TodoList(dbList=", "").replace(")", "")
+
+        db.collection("ListGroups")
+            .document(listOnFirebase)
+            .collection(listOnFirebase)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    val dataDoneMark = document.data.toString().replace("{done=", "").replace("}", "")
+                    var itemFirebase: Items =
+                        if (dataDoneMark == "true") {
+                            Items(document.id, isChecked = true)
+                        } else {
+                            Items(document.id, isChecked = false)
+                        }
+                    ItemClass.instance.addItem(itemFirebase)
+                }
+            }
+            .addOnFailureListener { e -> Log.w(TAG, "Error ", e) }
+
+        binding.listName.text = listOnFirebase
 
         db.collection("Progress")
-            .document(receivedListFormatted.replace(")", ""))
+            .document(listOnFirebase)
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
-                    Log.w(TAG, "Listen failed.", e)
-                    return@addSnapshotListener
+                    Log.w(TAG, "Error", e)
                 }
 
                 if (snapshot != null && snapshot.exists()) {
-                    Log.d(TAG, "Current data: ${snapshot.data}")
-                    val progress = snapshot.data.toString().replace("{progress=", "")
-                    val formattedProgress = progress.replace("}", "")
-                    binding.pbTwo.progress = formattedProgress.toInt() // Updates progress bar value
+                    Log.d(TAG, "Data now: ${snapshot.data}")
+                    binding.pbTwo.progress = snapshot.data.toString().replace("{progress=", "").replace("}", "").toInt()
                 } else {
-                    Log.d(TAG, "Current data: null")
+                    Log.d(TAG, "No data")
                 }
             }
 
@@ -96,14 +85,14 @@ class ListDetailsActivity : AppCompatActivity() {
 
             if(todoTitle.isNotEmpty()) {
                 var todo = Items(todoTitle, false)
-                val receivedListFormatted = list.toString().replace("TodoList(dbList=", "")
+                val listOnFirebase = list.toString().replace("TodoList(dbList=", "").replace(")", "")
                 val todoy = hashMapOf(
                     "done" to false
                 )
 
                 db.collection("ListGroups")
-                    .document(receivedListFormatted.replace(")", ""))
-                    .collection(receivedListFormatted.replace(")", ""))
+                    .document(listOnFirebase)
+                    .collection(listOnFirebase)
                     .document(todoTitle)
                     .set(todoy)
                     .addOnSuccessListener {
@@ -120,32 +109,27 @@ class ListDetailsActivity : AppCompatActivity() {
         }
 
         btnDeleteItem.setOnClickListener {
-            val receivedBookFormatted = list.toString().replace("TodoList(dbList=", "")
+            val listFromFirebase = list.toString().replace("TodoList(dbList=", "").replace(")", "")
 
             ItemClass.instance.deleteChecked()
 
-            db.collection("ListGroup")
-                .document(receivedBookFormatted.replace(")", ""))
-                .collection(receivedBookFormatted.replace(")", ""))
+            db.collection("ListGroups")
+                .document(listFromFirebase)
+                .collection(listFromFirebase)
                 .whereEqualTo("done", true)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
                         db.collection("Items")
-                            .document(receivedBookFormatted.replace(")", ""))
-                            .collection(receivedBookFormatted.replace(")", ""))
+                            .document(listFromFirebase)
+                            .collection(listFromFirebase)
                             .document(document.id)
                             .delete()
                             .addOnSuccessListener {
-                                Log.d(TAG, "DocumentSnapshot successfully deleted!")
-
-                                // Returns progress bar to 0
-                                val doc = hashMapOf(
-                                    "progress" to 0
-                                )
-
+                                Log.d(TAG, "Successfully deleted!")
+                                val doc = hashMapOf("progress" to 0)
                                 db.collection("Progress")
-                                    .document(receivedListFormatted.replace(")", ""))
+                                    .document(listOnFirebase)
                                     .set(doc)
                                     .addOnSuccessListener {
                                         Log.d(TAG, "Changed progress")

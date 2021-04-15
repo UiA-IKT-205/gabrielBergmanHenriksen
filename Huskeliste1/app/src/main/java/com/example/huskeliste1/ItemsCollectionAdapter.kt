@@ -26,7 +26,7 @@ class ItemsCollectionAdapter(private var items:List<Items>) : RecyclerView.Adapt
         val db = Firebase.firestore
         var countTrue = 0
         var totalItems: Int
-        var progressValue: Float = 0.00F
+        var progressValue = 0.0F
         holder.bind(item)
 
         holder.itemView.apply {
@@ -36,26 +36,19 @@ class ItemsCollectionAdapter(private var items:List<Items>) : RecyclerView.Adapt
             cbDone.setOnCheckedChangeListener { _, isChecked ->
                 item.isChecked = !item.isChecked
 
-                // Changes status in Firestore
-                // ------------------------------------------------------------------------ //
-                db.collection("Lists")
-                    .document(receivedListFormatted.replace(")", ""))
-                    .collection(receivedListFormatted.replace(")", ""))
+                listOnFirebase = replaceSuffix(listOnFirebase)
+
+                db.collection("ListGroups")
+                    .document(listOnFirebase)
+                    .collection(listOnFirebase)
                     .document(tvTodoTitle.text as String)
                     .update("done", cbDone.isChecked)
-                    .addOnSuccessListener {
-                        println("Changed status successfully!")
-                    }
-                    .addOnFailureListener { e ->
-                        println("Failed to change status!")
-                    }
-                // ------------------------------------------------------------------------ //
+                    .addOnSuccessListener { println("Changed status successfully!") }
+                    .addOnFailureListener { println("Failed to change status!") }
 
-                // Calculates and updates progress
-                // ------------------------------------------------------------------------ //
-                db.collection("Lists")
-                    .document(receivedListFormatted.replace(")", ""))
-                    .collection(receivedListFormatted.replace(")", ""))
+                db.collection("ListGroups")
+                    .document(listOnFirebase)
+                    .collection(listOnFirebase)
                     .whereEqualTo("done", true)
                     .get()
                     .addOnSuccessListener { documents ->
@@ -74,35 +67,29 @@ class ItemsCollectionAdapter(private var items:List<Items>) : RecyclerView.Adapt
                         )
 
                         db.collection("Progress")
-                            .document(receivedListFormatted.replace(")", ""))
+                            .document(listOnFirebase)
                             .set(doc)
-                            .addOnSuccessListener {
-                                println("Changed progress")
-                            }
-                            .addOnFailureListener {
-                                println("Failed to change progress!")
-                            }
-
-                        // Set values back to 0
+                            .addOnSuccessListener { println("Progress changed") }
+                            .addOnFailureListener { println("Failed changing progress") }
+                        progressValue = 0.0F
                         countTrue = 0
                         totalItems = 0
-                        progressValue = 0.0F
                     }
-                    .addOnFailureListener { e ->
-                        println("Failed to get progress!")
-                    }
-                // ------------------------------------------------------------------------ //
+                    .addOnFailureListener { println("Failed getting progress") }
             }
         }
+    }
+
+    fun replaceSuffix(str: String): String {
+        return str.replace(")", "")
+    }
+
+    fun updateItemCollection(newItems:List<Items>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
-
-    fun updateItemCollection(newItems:List<Items>){
-        items = newItems
-        notifyDataSetChanged()
-    }
-
 }

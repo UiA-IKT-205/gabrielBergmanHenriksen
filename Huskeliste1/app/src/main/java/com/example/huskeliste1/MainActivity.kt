@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         }
         ListDepositoryManager.instance.load(this)
 
-        binding.saveBt.setOnClickListener {
+        binding.btSave.setOnClickListener {
             val dbList = binding.title.text.toString()
             binding.title.setText("")
             addList(dbList)
@@ -46,18 +46,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addList(dbList: String) {
+        if (dbList.isBlank()) {
+            return
+        }
         val list = TodoList(dbList)
         val db = Firebase.firestore
-
         val ex = hashMapOf(
             "exists" to 1
         )
 
-        db.collection("Lists").document(dbList)
+        db.collection("ListGroups").document(dbList)
             .set(ex)
             .addOnSuccessListener {
                 Log.d(TAG, "Exists ref added with ID: $dbList")
-                db.collection("Lists").document(dbList)
+                db.collection("ListGroups").document(dbList)
                     .set(list)
                     .addOnSuccessListener {
                         Log.d(TAG, "List added with ID: $list")
