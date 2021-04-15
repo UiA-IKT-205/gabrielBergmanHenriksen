@@ -46,9 +46,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addList(dbList: String) {
+        if (dbList.isBlank()) {
+            return
+        }
         val list = TodoList(dbList)
         val db = Firebase.firestore
-
         val ex = hashMapOf(
             "exists" to 1
         )

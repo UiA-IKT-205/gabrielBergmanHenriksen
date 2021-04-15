@@ -29,11 +29,10 @@ class ListCollectionAdapter(private var lists:List<TodoList>, private val onList
 
                     if (snapshot != null && snapshot.exists()) {
                         Log.d(TAG, "Current data: ${snapshot.data}")
-                        val progress = snapshot.data.toString().replace("{progress=", "")
-                        val formattedProgress = progress.replace("}", "")
-                        binding.progressBar.progress = formattedProgress.toInt()
+                        val progress = snapshot.data.toString().replace("{progress=", "").replace("}", "")
+                        binding.progressBar.progress = progress.toInt()
                     } else {
-                        Log.d(TAG, "Current data: null")
+                        Log.d(TAG, "No data")
                     }
                 }
 
@@ -58,7 +57,6 @@ class ListCollectionAdapter(private var lists:List<TodoList>, private val onList
                 val doc = hashMapOf(
                     "progress" to 0
                 )
-
                 db.collection("ListGroups")
                     .document(title.text as String)
                     .collection(title.text as String)
@@ -82,20 +80,17 @@ class ListCollectionAdapter(private var lists:List<TodoList>, private val onList
                                                     db.collection("Progress")
                                                         .document(title.text as String)
                                                         .delete()
-                                                        .addOnSuccessListener { Log.d(TAG, "dbList progress deleted!") }
-                                                        .addOnFailureListener { e -> Log.w(TAG, "Error deleting dbList progress", e) }
-                                                    Log.d(TAG, "dbList progress deleted!")
+                                                        .addOnSuccessListener { Log.d(TAG, "Deleted") }
+                                                        .addOnFailureListener { e -> Log.w(TAG, "Error", e) }
                                                 }
-                                                .addOnFailureListener { e -> Log.w(TAG, "Error deleting dbList progress", e) }
-                                            Log.d(TAG, "DocumentSnapshot successfully deleted! (list)")
+                                                .addOnFailureListener { e -> Log.w(TAG, "Error", e) }
                                         }
-                                        .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
-                                    Log.d(TAG, "DocumentSnapshot successfully deleted! (doc)") }
-                                .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+                                        .addOnFailureListener { e -> Log.w(TAG, "Error", e) }
+                                }
+                                .addOnFailureListener { e -> Log.w(TAG, "Error", e) }
                         }
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!")
                     }
-                    .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+                    .addOnFailureListener { e -> Log.w(TAG, "Error", e) }
                 val remove = TodoList(title.text as String)
                 ListDepositoryManager.instance.removeList(remove)
             }

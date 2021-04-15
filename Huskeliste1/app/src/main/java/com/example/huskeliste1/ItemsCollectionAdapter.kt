@@ -36,21 +36,19 @@ class ItemsCollectionAdapter(private var items:List<Items>) : RecyclerView.Adapt
             cbDone.setOnCheckedChangeListener { _, isChecked ->
                 item.isChecked = !item.isChecked
 
-                db.collection("ListGroups")
-                    .document(ListOnFirebase.replace(")", ""))
-                    .collection(ListOnFirebase.replace(")", ""))
-                    .document(tvTodoTitle.text as String)
-                    .update("done", cbDone.isChecked)
-                    .addOnSuccessListener {
-                        println("Changed status successfully!")
-                    }
-                    .addOnFailureListener { e ->
-                        println("Failed to change status!")
-                    }
+                listOnFirebase = replaceSuffix(listOnFirebase)
 
                 db.collection("ListGroups")
-                    .document(ListOnFirebase.replace(")", ""))
-                    .collection(ListOnFirebase.replace(")", ""))
+                    .document(listOnFirebase)
+                    .collection(listOnFirebase)
+                    .document(tvTodoTitle.text as String)
+                    .update("done", cbDone.isChecked)
+                    .addOnSuccessListener { println("Changed status successfully!") }
+                    .addOnFailureListener { println("Failed to change status!") }
+
+                db.collection("ListGroups")
+                    .document(listOnFirebase)
+                    .collection(listOnFirebase)
                     .whereEqualTo("done", true)
                     .get()
                     .addOnSuccessListener { documents ->
@@ -69,33 +67,29 @@ class ItemsCollectionAdapter(private var items:List<Items>) : RecyclerView.Adapt
                         )
 
                         db.collection("Progress")
-                            .document(ListOnFirebase.replace(")", ""))
+                            .document(listOnFirebase)
                             .set(doc)
-                            .addOnSuccessListener {
-                                println("Progress changed")
-                            }
-                            .addOnFailureListener {
-                                println("Failed changing progress")
-                            }
-
+                            .addOnSuccessListener { println("Progress changed") }
+                            .addOnFailureListener { println("Failed changing progress") }
+                        progressValue = 0.0F
                         countTrue = 0
                         totalItems = 0
-                        progressValue = 0.0F
                     }
-                    .addOnFailureListener { e ->
-                        println("Failed getting progress")
-                    }
+                    .addOnFailureListener { println("Failed getting progress") }
             }
         }
+    }
+
+    fun replaceSuffix(str: String): String {
+        return str.replace(")", "")
+    }
+
+    fun updateItemCollection(newItems:List<Items>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
-
-    fun updateItemCollection(newItems:List<Items>){
-        items = newItems
-        notifyDataSetChanged()
-    }
-
 }
