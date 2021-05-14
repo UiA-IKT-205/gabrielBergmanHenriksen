@@ -14,7 +14,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_name">knots and crosses</string>
     <string name="player_name">Player name</string>
-    <string name="game_id_hint">Id of game</string>
     <string name="game_id_placeholder">Game id</string>
     <string name="player_name_1_placeholder">Player Name 1</string>
     <string name="player_name_2_placeholder">Player Name 2</string>

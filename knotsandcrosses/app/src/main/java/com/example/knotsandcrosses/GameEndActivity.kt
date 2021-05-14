@@ -14,9 +14,6 @@ class GameEndActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val winningPlayer = intent.getStringExtra("winningPlayer").toString()
-
-        findViewById<TextView>(R.id.winningPlayerText).apply {
-            text = winningPlayer
-        }
+        findViewById<TextView>(R.id.winningPlayerText).text = winningPlayer
     }
 }

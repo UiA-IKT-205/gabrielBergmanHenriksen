@@ -11,8 +11,6 @@ typealias GameManagerCallback = (game:Game?) -> Unit
 
 object GameManager {
 
-    var player:String? = null
-    var state:GameState? = null
     private const val TAG:String = "GameManager"
 
     val StartingGameState:GameState = mutableListOf(mutableListOf("0","0","0"), mutableListOf("0","0","0"), mutableListOf("0","0","0"))
@@ -46,7 +44,7 @@ object GameManager {
     fun pollGame(gameId:String, callback:GameManagerCallback){
         GameService.pollGame(gameId) { game: Game?, err: Int? ->
             if(err != null){
-                Log.d(TAG, "Error refreshing game, code : $err")
+                Log.d(TAG, "Error fetching game, code : $err")
             } else {
                 callback(game)
             }
@@ -55,7 +53,7 @@ object GameManager {
     }
 
     fun updateGame(gameId:String, state:GameState){
-        GameService.updateGame(gameId, state) { game: Game?, err: Int? ->
+        GameService.updateGame(gameId, state) { _, err: Int? ->
             if(err != null){
                 Log.d(TAG, "Error updating game, code : $err")
             }

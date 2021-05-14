@@ -20,7 +20,7 @@ class JoinGameDialog() : DialogFragment() {
             val binding = DialogJoinGameBinding.inflate(inflater)
 
             builder.apply {
-                setTitle("Join game")
+                setTitle("Join an existing game")
                 setPositiveButton("Join") { _, _ ->
                     if(binding.username.text.toString() != ""){
                         listener.onDialogJoinGame(binding.username.text.toString(), binding.gameId.text.toString())
@@ -31,11 +31,9 @@ class JoinGameDialog() : DialogFragment() {
                 }
                 setView(binding.root)
             }
-
             builder.create()
 
-
-        } ?: throw IllegalStateException("Activity cannot be null")
+        } ?: throw IllegalStateException("Error, activity is null")
     }
 
     override fun onAttach(context: Context) {
@@ -43,8 +41,7 @@ class JoinGameDialog() : DialogFragment() {
         try {
             listener = context as GameDialogListener
         } catch (e: ClassCastException){
-            throw ClassCastException(("$context must implement GameDialogListener"))
-
+            throw ClassCastException(("$context GameDialogListener missing"))
         }
     }
 }
