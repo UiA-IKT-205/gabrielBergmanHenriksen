@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import com.example.knotsandcrosses.GameManager.StartingGameState
 import com.example.knotsandcrosses.api.data.Game
 import com.example.knotsandcrosses.api.data.GameState
@@ -17,8 +14,8 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityGameBinding
 
-    private var playerSign: String = "X"
-    private var opponentSign: String = "O"
+    private var playerOne: String = "X"
+    private var playerTwo: String = "O"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,9 +77,9 @@ class GameActivity : AppCompatActivity() {
     private fun makeMove(game: Game?, row: Int, column: Int) {
         val gameBoard = game?.state.toString()
         val gameXTurn = gameBoard.count{c -> c == 'X'} <= gameBoard.count{c -> c == 'O'}
-        if ((playerSign == "X" && gameXTurn) || (playerSign == "O" && !gameXTurn)) {
+        if ((playerOne == "X" && gameXTurn) || (playerOne == "O" && !gameXTurn)) {
             if (game != null && game.state[row][column] == "0") {
-                game.state[row][column] = playerSign
+                game.state[row][column] = playerOne
                 game.state.let {
                     GameManager.updateGame(game.gameId, it)
                 }
@@ -114,12 +111,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     fun loadPlayerNames(game: Game) {
-        playerSign = "X"
-        opponentSign = "O"
         binding.playerName1Text.text = game.players[0]
         if (game.players.size > 1) {
-            playerSign = "O"
-            opponentSign = "X"
+            playerOne = "O"
+            playerTwo = "X"
             binding.playerName2Text.text = game.players[1]
         }
     }
@@ -142,7 +137,7 @@ class GameActivity : AppCompatActivity() {
         if (state[1][1] != "0") {
             if (state[0][0] == state[1][1] && state[1][1] == state[2][2]) {
                 gameEnd(state[1][1])
-            } else if (state[0][0] == state[1][1] && state[1][1] == state[2][2]) {
+            } else if (state[2][0] == state[1][1] && state[1][1] == state[0][2]) {
                 gameEnd(state[1][1])
             }
         }

@@ -3,21 +3,14 @@ package com.example.knotsandcrosses.dialogs
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.knotsandcrosses.R
-import com.example.knotsandcrosses.databinding.ActivityGameBinding
 import com.example.knotsandcrosses.databinding.DialogCreateGameBinding
 import java.lang.ClassCastException
 
 class CreateGameDialog() : DialogFragment() {
 
-    internal lateinit var listener:GameDialogListener
+    private lateinit var listener:GameDialogListener
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -27,7 +20,7 @@ class CreateGameDialog() : DialogFragment() {
             val binding = DialogCreateGameBinding.inflate(inflater)
 
             builder.apply {
-                setTitle("Create game")
+                setTitle("Create a new game")
                 setPositiveButton("Create") { dialog, which ->
                     if(binding.username.text.toString() != ""){
                         listener.onDialogCreateGame(binding.username.text.toString())
@@ -38,11 +31,9 @@ class CreateGameDialog() : DialogFragment() {
                 }
                 setView(binding.root)
             }
-
             builder.create()
 
-
-        } ?: throw IllegalStateException("Activity cannot be null")
+        } ?: throw IllegalStateException("Error, activity is null")
     }
 
     override fun onAttach(context: Context) {
@@ -50,8 +41,7 @@ class CreateGameDialog() : DialogFragment() {
         try {
             listener = context as GameDialogListener
         } catch (e:ClassCastException){
-            throw ClassCastException(("$context must implement GameDialogListener"))
-
+            throw ClassCastException(("$context GameDialogListener missing"))
         }
     }
 
