@@ -1,0 +1,2 @@
+rootProject.name = "knots and crosses"
+include ':app'

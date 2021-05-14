@@ -10,11 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60d0c77b-8dba-41a8-90d5-7af169eec209" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Piano1/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Piano1/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Piano1/app/src/main/java/com/example/piano1/HalfTonePianoKey.kt" beforeDir="false" afterPath="$PROJECT_DIR$/Piano1/app/src/main/java/com/example/piano1/HalfTonePianoKey.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Piano1/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Piano1/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Piano1/app/src/main/res/layout/fragment_piano.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Piano1/app/src/main/res/layout/fragment_piano.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Piano1/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Piano1/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +47,7 @@
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-01-25T21:43:00.864085700Z" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Huskeliste" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.updates" />
   </component>
   <component name="RunManager">
@@ -132,21 +128,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="92" y="92" width="1736" height="856" key="AVDManager" timestamp="1611604234342">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1620821556817">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1611604234342" />
-    <state x="804" y="310" key="AndroidCreateXmlResourceDialog" timestamp="1611609065760">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="804" y="310" key="AndroidCreateXmlResourceDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1611609065760" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1618347354313">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1618347354313" />
-    <state x="461" y="165" key="SettingsEditor" timestamp="1611596549877">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1611596549877" />
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1620821556817" />
   </component>
 </project>
