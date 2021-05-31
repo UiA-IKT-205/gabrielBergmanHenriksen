@@ -20,7 +20,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var timeWorkTextView: TextView
     lateinit var timePauseTextView: TextView
 
-    var timeToCountDownInMs = 5000L
+    var workTimeToCountDownInMs = 5000L
+    var pauseTimeToCountDownInMs = 5000L
     val timeTicks = 1000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,46 +36,55 @@ class MainActivity : AppCompatActivity() {
         timeWorkTextView = findViewById<TextView>(R.id.timeWorkTextView)
         timePauseTextView = findViewById<TextView>(R.id.timePauseTextView)
         timeWorkSeekBar = findViewById<SeekBar>(R.id.timeWorkSeekBar)
-        timeWorkSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                Toast.makeText(this@MainActivity,"abc", Toast.LENGTH_SHORT).show()
+        timePauseSeekBar = findViewById<SeekBar>(R.id.timePauseSeekBar)
+
+        timeWorkSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
+                // Empty
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                TODO("Not yet implemented")
+            override fun onStartTrackingTouch(seek: SeekBar) {
+                // Empty
             }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                TODO("Not yet implemented")
+            override fun onStopTrackingTouch(seek: SeekBar) {
+                Toast.makeText(this@MainActivity,
+                    "Chosen work time: " + timeWorkSeekBar.progress + " minutes",
+                    Toast.LENGTH_SHORT
+                ).show()
+                setWorkTime(timeWorkSeekBar.progress)
             }
         })
-        timePauseSeekBar = findViewById<SeekBar>(R.id.timePauseSeekBar)
-        /*timePauseSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                Toast.makeText(this@MainActivity,"abc", Toast.LENGTH_SHORT).show()
+
+        timePauseSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seek: SeekBar, progress: Int, fromUser: Boolean) {
+                // Empty
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                TODO("Not yet implemented")
+            override fun onStartTrackingTouch(seek: SeekBar) {
+                // Empty
             }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                TODO("Not yet implemented")
+            override fun onStopTrackingTouch(seek: SeekBar) {
+                Toast.makeText(this@MainActivity,
+                    "Chosen pause time: " + timePauseSeekBar.progress + " minutes",
+                    Toast.LENGTH_SHORT
+                ).show()
+                setPauseTime(timePauseSeekBar.progress)
             }
-        })*/
-
+        })
     }
 
     fun setWorkTime(t_min: Int){
-        timeToCountDownInMs = (t_min * 1000 * 60).toLong()
+        workTimeToCountDownInMs = (t_min * 1000 * 60).toLong()
     }
     fun setPauseTime(t_min: Int){
-        timeToCountDownInMs = (t_min * 1000 * 60).toLong()
+        pauseTimeToCountDownInMs = (t_min * 1000 * 60).toLong()
     }
 
     fun startCountDown(v: View){
         startButton.isEnabled = false
-        timer = object : CountDownTimer(timeToCountDownInMs,timeTicks) {
+        timer = object : CountDownTimer(workTimeToCountDownInMs,timeTicks) {
             override fun onFinish() {
                 Toast.makeText(this@MainActivity,"Arbeidsøkt er ferdig", Toast.LENGTH_SHORT).show()
                 startButton.isEnabled = true

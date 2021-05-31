@@ -8,4 +8,5 @@
     <string name="time120min">120 min</string>
     <string name="timePauseString">Pause</string>
     <string name="timeWorkString">Arbeid</string>
+    <string name="repetitions_placeholder">Repetitions</string>
 </resources>
